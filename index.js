@@ -18,6 +18,14 @@ const con = mysql.createConnection({
     port:process.env.DB_PORT
 });
 
+con.connect((err) => {
+    if (err) {
+      console.error('Error connecting to MySQL database: ', err.stack);
+      return;
+    }
+    console.log('Connected to the MySQL database!');
+  });
+
 
 //initialisation du serveur
 const server = app.listen(port, '0.0.0.0' ,(error) => {
