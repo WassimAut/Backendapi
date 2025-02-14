@@ -15,7 +15,7 @@ const con = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port:process.env.DB_PORT
+
 });
 
 con.connect((err) => {
@@ -82,10 +82,12 @@ app.post("/save",CheckAuthenticatedUser,async(req,res)=>{
         let localDateTime = item.value+":00.000Z"
         const localDate = new Date(localDateTime);
         let timestamp = localDate.getTime();
+        let portion =item.portion
+        console.log("the portion is:",portion)
         console.log(`Value: ${item.value}`);
         console.log("timestamp:",timestamp);
         try{
-           let sql = `INSERT INTO distributions (delivery_time, delivery_status) VALUES (${timestamp}, FALSE)`;
+           let sql = `INSERT INTO distributions (delivery_time, delivery_status,portion) VALUES (${timestamp}, FALSE,${portion})`;
            con.query(sql, function (err, result) {
             if (err){
                 //throw err;
