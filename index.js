@@ -15,8 +15,7 @@ const con = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-
+    port:process.env.DB_PORT
 });
 
 con.connect((err) => {
@@ -64,6 +63,13 @@ const CheckAuthenticatedUser=(req,res,next)=>{
  app.get('/', (req, res) => {
     res.send('Node.js Server is Working!');
 });
+
+app.get("/CheckAuth",CheckAuthenticatedUser, (req, res) => {
+    res.send('Node.js Server is Working!');
+    console.log("this path has been clicked");
+    return res.json({success:true})
+});
+
 
 app.post("/save",CheckAuthenticatedUser,async(req,res)=>{
     let inputData = req.body.data
